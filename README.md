@@ -61,6 +61,13 @@ This solution was designed using a layered architecture to keep responsibilities
 
 - .NET 8 SDK
 
+### Clone Repository
+
+```powershell
+git clone https://github.com/YashDhumke/unit-conversion-api
+cd unit-conversion-api
+```
+
 ### Restore Dependencies
 
 ```powershell
