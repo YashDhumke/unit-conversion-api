@@ -55,6 +55,13 @@ This solution was designed using a layered architecture to keep responsibilities
 - Hour (hr)
 - Day (day)
 
+### Speed
+
+- Meters per Second (m/s)
+- Kilometers per Hour (km/h)
+- Miles per Hour (mph)
+- Knot (kn)
+
 ## Run Locally
 
 ### Prerequisites
@@ -80,6 +87,12 @@ dotnet restore
 dotnet build
 ```
 
+### Run the Tests
+
+```powershell
+dotnet test
+```
+
 ### Run the API
 
 ```powershell
@@ -89,8 +102,8 @@ dotnet run --project .\UnitConversion.Api\UnitConversion.Api.csproj
 The API will start on the URLs shown in the terminal, commonly:
 
 ```text
-https://localhost:7047
-http://localhost:5047
+https://localhost:7260
+http://localhost:5078
 ```
 
 ### Swagger UI
@@ -98,7 +111,7 @@ http://localhost:5047
 After starting the application, open:
 
 ```text
-https://localhost:7047/swagger
+https://localhost:7260/swagger
 ```
 
 (or the HTTPS URL shown in your terminal)
@@ -109,9 +122,19 @@ Swagger can be used to explore and test all available endpoints.
 
 ## API Endpoints
 
+All endpoints are versioned under `/api/v1/`.
+
+### Health Check
+
+**GET** `/health`
+
+Returns `200 Healthy` when the service is running. Suitable for use with load balancers and container orchestrators.
+
 ### Convert a Value
 
-**POST** `/api/UnitConversion/convert`
+**POST** `/api/v1/UnitConversion/convert`
+
+The optional `precision` field controls the number of decimal places in the result (0–12, default 6).
 
 #### Request
 
@@ -121,6 +144,16 @@ Swagger can be used to explore and test all available endpoints.
   "fromUnit": "m",
   "toUnit": "ft",
   "precision": 4
+}
+```
+
+#### Minimal Request (no precision — defaults to 6 decimal places)
+
+```json
+{
+  "value": 100,
+  "fromUnit": "kph",
+  "toUnit": "mph"
 }
 ```
 
@@ -152,13 +185,13 @@ Swagger can be used to explore and test all available endpoints.
 
 ### List Categories
 
-**GET** `/api/UnitConversion/categories`
+**GET** `/api/v1/UnitConversion/categories`
 
 Returns all supported conversion categories.
 
 ### List Units
 
-**GET** `/api/UnitConversion/units`
+**GET** `/api/v1/UnitConversion/units`
 
 Returns all supported units and their metadata.
 
@@ -287,9 +320,8 @@ Potential enhancements for a production-ready version include:
 - Administrative UI for managing units and categories
 - Authentication and authorization
 - Caching frequently used conversion data
-- Versioned APIs
 - Audit logging
-- Unit and integration test projects
+- Integration test coverage for the HTTP layer
 - Docker support
 - CI/CD pipeline integration
 - OpenTelemetry monitoring and tracing

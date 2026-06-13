@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Microsoft.OpenApi;
 using UnitConversion.Api.ApiServices.Conversion;
 using UnitConversion.Domain.Core.Repositories.Conversion;
 using UnitConversion.Domain.Core.Services.Conversion;
@@ -15,7 +16,17 @@ builder.Services.AddControllers()
     });
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Unit Conversion API",
+        Version = "v1",
+        Description = "Converts numeric values between supported units of measurement."
+    });
+});
+
+builder.Services.AddHealthChecks();
 
 builder.Services.AddScoped<IUnitConversionApiService, UnitConversionApiService>();
 builder.Services.AddScoped<IUnitConversionService, UnitConversionService>();
@@ -35,11 +46,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "Unit Conversion API v1"));
 }
 
 app.UseHttpsRedirection();
 app.UseCors("DefaultCorsPolicy");
+app.MapHealthChecks("/health");
 app.MapControllers();
 
 app.Run();

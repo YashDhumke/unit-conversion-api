@@ -33,7 +33,7 @@ public class InMemoryUnitCatalogRepository : IUnitCatalogRepository
         new("l", "Liter", "L", ConversionCategory.Volume, 1m),
         new("ml", "Milliliter", "mL", ConversionCategory.Volume, 0.001m),
         new("cl", "Centiliter", "cL", ConversionCategory.Volume, 0.01m),
-        new("m3", "Cubic Meter", "m³", ConversionCategory.Volume, 1000m),
+        new("m3", "Cubic Meter", "mï¿½", ConversionCategory.Volume, 1000m),
         new("gal", "Gallon", "gal", ConversionCategory.Volume, 3.78541m),
 
         // Time (Base = Second)
@@ -41,6 +41,12 @@ public class InMemoryUnitCatalogRepository : IUnitCatalogRepository
         new("min", "Minute", "min", ConversionCategory.Time, 60m),
         new("hr", "Hour", "hr", ConversionCategory.Time, 3600m),
         new("day", "Day", "day", ConversionCategory.Time, 86400m),
+
+        // Speed (Base = Meters per Second)
+        new("mps", "Meters per Second", "m/s", ConversionCategory.Speed, 1m),
+        new("kph", "Kilometers per Hour", "km/h", ConversionCategory.Speed, 1m / 3.6m),
+        new("mph", "Miles per Hour", "mph", ConversionCategory.Speed, 0.44704m),
+        new("kn", "Knot", "kn", ConversionCategory.Speed, 0.514444m),
     ];
 
     public Task<IReadOnlyCollection<MeasurementUnit>> GetAllAsync()

@@ -1,16 +1,15 @@
-using UnitConversion.ApiModels.Conversion;
 using UnitConversion.Domain.Core.Services.Conversion;
 using UnitConversion.Domain.Models.Conversion;
 
 namespace UnitConversion.Api.ApiServices.Conversion;
 
-public class UnitConversionApiService( IUnitConversionService unitConversionService, ILogger<UnitConversionApiService> logger) :IUnitConversionApiService
+public class UnitConversionApiService(IUnitConversionService unitConversionService, ILogger<UnitConversionApiService> logger) : IUnitConversionApiService
 {
-    public async Task<UnitConversionResult> ConvertAsync(UnitConversionApiModel model)
+    public async Task<UnitConversionResult> ConvertAsync(UnitConversionRequest request)
     {
-        logger.LogTrace("Conversion request: {@ConversionRequest}", model);
+        logger.LogTrace("Conversion request: {@ConversionRequest}", request);
 
-        var result = await unitConversionService.ConvertAsync(model).ConfigureAwait(false);
+        var result = await unitConversionService.ConvertAsync(request).ConfigureAwait(false);
         return result;
     }
 

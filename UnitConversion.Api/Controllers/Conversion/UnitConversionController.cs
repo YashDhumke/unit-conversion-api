@@ -1,11 +1,11 @@
 using UnitConversion.Api.ApiServices.Conversion;
-using UnitConversion.ApiModels.Conversion;
 using UnitConversion.Domain.Models;
+using UnitConversion.Domain.Models.Conversion;
 using Microsoft.AspNetCore.Mvc;
 
 namespace UnitConversion.Api.Controllers.Conversion;
 
-[Route("api/[controller]")]
+[Route("api/v1/[controller]")]
 [ApiController]
 public class UnitConversionController : ControllerBase
 {
@@ -17,14 +17,14 @@ public class UnitConversionController : ControllerBase
     }
 
     [HttpPost("convert", Name = "ConvertUnit")]
-    public async Task<ActionResult> Convert([FromBody] UnitConversionApiModel model)
+    public async Task<ActionResult> Convert([FromBody] UnitConversionRequest request)
     {
-        if (model == null)
+        if (request == null)
             return BadRequest("Conversion request is required.");
 
         try
         {
-            var result = await unitConversionApiService.ConvertAsync(model).ConfigureAwait(false);
+            var result = await unitConversionApiService.ConvertAsync(request).ConfigureAwait(false);
             return Ok(result);
         }
         catch (DomainValidationException ex)
