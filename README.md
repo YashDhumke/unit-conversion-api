@@ -112,6 +112,7 @@ After starting the application, open:
 
 ```text
 https://localhost:7260/swagger
+http://localhost:5078/swagger
 ```
 
 (or the HTTPS URL shown in your terminal)
@@ -345,3 +346,4 @@ Potential enhancements for a production-ready version include:
 - All conversions occur within the same category.
 - Precision controls the number of decimal places returned in the response.
 - The API is intended for local execution and demonstration purposes.
+
